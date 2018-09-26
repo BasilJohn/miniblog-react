@@ -1,0 +1,8 @@
+.page__header{
+    background-color:#B1B2B7;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center
+
+}
