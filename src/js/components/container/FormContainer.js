@@ -1,18 +1,21 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import Header from "../presentational/Header";
+import Footer from "../presentational/Footer";
+
+import Styles from "../container/container.css";
+
 class FormContainer extends Component {
     constructor() {
         super();
-        this.state = {
-
-        };
+        this.state = {};
     }
 
     render() {
         return (
-            <form id="main-form">
+            <form id="main-form" className={Styles.main}>
                 <Header text="Mini-blog" />
+                <Footer />
             </form>
         );
     }
