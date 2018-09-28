@@ -22,12 +22,12 @@ class FormContainer extends Component {
     render() {
         return (
             <form id="main-form" className={Styles.main}>
-                <Header text="Mini-blog" />
+                <Header isAddUpdate={this.state.isAddUpdate} text="Mini-blog" />
                 <div className="content" >
                     <ArticleList isAddUpdate={this.state.isAddUpdate} />
                     <AddUpdateArticle isAddUpdate={this.state.isAddUpdate} />
                 </div>
-                <Footer openNextpage={this.openAddNewArticle.bind(this)} />
+                <Footer isAddUpdate={this.state.isAddUpdate} openNextpage={this.openAddNewArticle.bind(this)} />
             </form>
         );
     }

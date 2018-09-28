@@ -3,6 +3,10 @@
     height: 500px;
     border: 1px solid black;
 }
+.content {
+
+    
+}
 .content__displaynone{
 
     display: none;

@@ -9,13 +9,21 @@
 .footer{
     display: flex;
     justify-content: flex-end;
-    width: 90%;
+    width: 91%;
     position:absolute;
-    bottom:10px; 
+    bottom:3px; 
 }
 .footer__image{
 
     height: 30px;
     width: 30px;
     
+}
+.control__displaynone{
+
+    display: none;
+}
+.control__displayinline{
+
+    display: inline
 }
