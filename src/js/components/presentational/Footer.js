@@ -1,10 +1,12 @@
 import React from "react";
 import PresentationalStyles from "../presentational/presentational.css";
 
-const Footer = () => (
-    <div className="form-group">
+const Footer = (props) => (
+      <div className="form-group">
         <div className={PresentationalStyles.footer}>
-            <img className={PresentationalStyles.footer__image} src="../../../src/assets/plus.svg" />
+            <button type="button" onClick={()=>props.openNextpage()}>
+                <img className={PresentationalStyles.footer__image} src="../../../src/assets/plus.svg" />
+            </button>
         </div>
     </div>
 );
