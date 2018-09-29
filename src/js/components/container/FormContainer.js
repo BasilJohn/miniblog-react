@@ -5,32 +5,47 @@ import Footer from "../presentational/Footer";
 import Styles from "../container/container.css";
 import AddUpdateArticle from "./AddUpdateArticle";
 import ArticleList from "./ArticleList";
-
+import renderIf from "../common/renderIf";
 
 class FormContainer extends Component {
-    constructor() {
-        super();
-        this.state = {
-            isAddUpdate: false
-        };
-    }
+  constructor() {
+    super();
+    this.state = {
+      isAddUpdate: false
+    };
+  }
 
-    openAddNewArticle() {
-        this.setState({ isAddUpdate: true });
-    }
+  openAddNewArticle() {
+    this.setState({ isAddUpdate: true });
+  }
 
-    render() {
-        return (
-            <form id="main-form" className={Styles.main}>
-                <Header isAddUpdate={this.state.isAddUpdate} text="Mini-blog" />
-                <div className="content" >
-                    <ArticleList isAddUpdate={this.state.isAddUpdate} />
-                    <AddUpdateArticle isAddUpdate={this.state.isAddUpdate} />
-                </div>
-                <Footer isAddUpdate={this.state.isAddUpdate} openNextpage={this.openAddNewArticle.bind(this)} />
-            </form>
-        );
-    }
+  postArticle(){
+
+    this.setState({ isAddUpdate: false });
+  }
+
+  render() {
+    return (
+      <form id="main-form" className={Styles.main}>
+        <Header
+          postArticle={this.postArticle.bind(this)}
+          isAddUpdate={this.state.isAddUpdate}
+          text="Mini-blog"
+        />
+        <div className="content">
+          <ArticleList isAddUpdate={this.state.isAddUpdate} />
+          <AddUpdateArticle isAddUpdate={this.state.isAddUpdate} />
+        </div>
+        {renderIf(
+          !this.state.isAddUpdate,
+          <Footer
+            isAddUpdate={this.state.isAddUpdate}
+            openNextpage={this.openAddNewArticle.bind(this)}
+          />
+        )}
+      </form>
+    );
+  }
 }
 export default FormContainer;
 const wrapper = document.getElementById("main");
