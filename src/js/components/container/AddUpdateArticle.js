@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Styles from "../container/container.css";
 import Input from '../presentational/Input';
 import TextArea from '../presentational/TextArea';
+import { connect } from "react-redux";
+import { setTitle, setArticleText } from "../../store/actions/main";
 
 class AddUpdate extends Component {
     constructor() {
@@ -14,16 +16,16 @@ class AddUpdate extends Component {
 
     handleChange(event) {
 
-        this.setState({ [event.target.id]: event.target.value });
+        this.props.setTitle(event.target.value)
     }
 
     handleTextAreaChange(event) {
 
-        this.setState({ [event.target.id]: event.target.value });
+        this.props.setArticleText(event.target.value)
     }
 
     render() {
-        const { titleText, description } = this.state;
+        const { titleText, articleText } = this.props;
         return (
             <div
                 className={[
@@ -45,11 +47,21 @@ class AddUpdate extends Component {
                     label="description"
                     type="text"
                     id="description"
-                    value={description}
+                    value={articleText}
                     handleChange={this.handleTextAreaChange.bind(this)}
                 />
             </div>
         );
     }
 }
-export default AddUpdate;
+const mapStateToProps = ({ main }) => {
+    const { titleText, articleText } = main;
+    return { titleText, articleText };
+};
+
+export default connect(
+    mapStateToProps,
+    {
+        setArticleText, setTitle
+    }
+)(AddUpdate);

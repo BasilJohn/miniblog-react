@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Styles from "../presentational/presentational.css";
 
 const Header = ({ text, isAddUpdate, postArticle }) => (
-    <div className="form-group">
+    <div >
         <div className={Styles.header}>
             <div className={[isAddUpdate ? Styles.control__displayinline : Styles.control__displaynone]}>
                 <img onClick={() => postArticle()}

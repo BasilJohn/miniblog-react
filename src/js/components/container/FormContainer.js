@@ -6,25 +6,32 @@ import Styles from "../container/container.css";
 import AddUpdateArticle from "./AddUpdateArticle";
 import ArticleList from "./ArticleList";
 import renderIf from "../common/renderIf";
-import {  loadArticle, updateArticle, addArticle } from "../../store/actions/main";
+import { loadArticle, updateArticle, addArticle ,setToDefault } from "../../store/actions/main";
 
 class FormContainer extends Component {
     constructor() {
         super();
         this.state = {
-            isAddUpdate: false
+            isAddUpdate: false,
+            articleList: []
         };
     }
 
     openAddNewArticle() {
         this.setState({ isAddUpdate: true });
-        this.props.addArticle("Hello");
+        
+
+
     }
 
     postArticle() {
 
         this.setState({ isAddUpdate: false });
+        const { titleText, articleText } = this.props;
+        this.props.addArticle({ titleText, articleText });
+        this.props.setToDefault();
     }
+
 
     render() {
         return (
@@ -35,7 +42,7 @@ class FormContainer extends Component {
                     text="Mini-blog"
                 />
                 <div className="content">
-                    <ArticleList isAddUpdate={this.state.isAddUpdate} />
+                    <ArticleList articleList={this.props.articleList} isAddUpdate={this.state.isAddUpdate} />
                     <AddUpdateArticle isAddUpdate={this.state.isAddUpdate} />
                 </div>
                 {renderIf(
@@ -50,14 +57,14 @@ class FormContainer extends Component {
     }
 }
 const mapStateToProps = ({ main }) => {
-    const { articleList, isAdded, isUpdated } = main;
-    return { articleList, isAdded, isUpdated };
+    const { articleList, isAdded, isUpdated, titleText, articleText } = main;
+    return { articleList, isAdded, isUpdated, titleText, articleText };
 };
 
 export default connect(
     mapStateToProps,
     {
-        loadArticle, updateArticle, addArticle
+        loadArticle, updateArticle, addArticle,setToDefault
     }
 )(FormContainer);
 

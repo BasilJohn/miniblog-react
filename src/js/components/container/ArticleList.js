@@ -7,7 +7,14 @@ class ArticleList extends Component {
     this.state = {};
   }
 
+
   render() {
+
+    const listItems = this.props.articleList.map((item,index) =>
+      <div className={Styles.brief} key={index}>
+        <b>{item.titleText}</b>
+      </div>);
+
     return (
       <div
         className={[
@@ -16,7 +23,9 @@ class ArticleList extends Component {
             : Styles.content__displayinline
         ]}
       >
-        {"ArticleList"}
+        <div >
+          {listItems}
+        </div>
       </div>
     );
   }
