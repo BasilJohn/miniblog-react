@@ -5,7 +5,10 @@
 }
 .content {
 
-    
+    height: 90%;
+    overflow-x: hidden;
+    overflow-y:scroll;
+    padding-left: 10px;
 }
 .content__displaynone{
 
@@ -17,7 +20,15 @@
 }
 .brief{
 
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid lightgrey;
     height: 70px;
     padding: 5px;
+}
+::-webkit-scrollbar {
+    width: 10px;  /* remove scrollbar space */
+    background:transparent;  /* optional: just make scrollbar invisible */
+}
+/* optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background:grey;
 }

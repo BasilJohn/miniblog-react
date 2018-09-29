@@ -79,7 +79,7 @@ class FormContainer extends Component {
                     isUpdate={this.state.isUpdate}
                     text="Mini-blog"
                 />
-                <div className="content">
+                <div className={Styles.content}>
                     <ArticleList
                         openEditArticle={this.opeEditArticle.bind(this)}
                         articleList={this.props.articleList}
