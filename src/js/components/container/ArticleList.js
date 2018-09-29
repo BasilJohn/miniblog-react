@@ -11,7 +11,7 @@ class ArticleList extends Component {
   render() {
 
     const listItems = this.props.articleList.map((item,index) =>
-      <div className={Styles.brief} key={index}>
+      <div onClick={()=>this.props.openEditArticle(index)} className={Styles.brief} key={index}>
         <b>{item.titleText}</b>
       </div>);
 

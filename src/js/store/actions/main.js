@@ -4,7 +4,8 @@ import {
     UPDATE_ARTICLE,
     SET_TITLE,
     SET_ARTICLE_TEXT,
-    SET_DEFAULT
+    SET_DEFAULT,
+    SET_VALUES
 } from "./types";
 
 export const addArticle = value => {
@@ -14,10 +15,11 @@ export const addArticle = value => {
     };
 };
 
-export const updateArticle = text => {
+export const updateArticle = value => {
+    console.log(value)
     return {
         type: UPDATE_ARTICLE,
-        payload: text
+        payload: value
     };
 };
 
@@ -45,5 +47,12 @@ export const setToDefault=()=>{
 
     return {
         type: SET_DEFAULT
+    };
+}
+
+export const setEditValues=value=>{
+    return {
+        type: SET_VALUES,
+        payload:value
     };
 }

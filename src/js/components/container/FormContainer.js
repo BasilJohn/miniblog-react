@@ -6,43 +6,75 @@ import Styles from "../container/container.css";
 import AddUpdateArticle from "./AddUpdateArticle";
 import ArticleList from "./ArticleList";
 import renderIf from "../common/renderIf";
-import { loadArticle, updateArticle, addArticle ,setToDefault } from "../../store/actions/main";
+import {
+    loadArticle,
+    updateArticle,
+    addArticle,
+    setToDefault,
+    setEditValues
+} from "../../store/actions/main";
 
 class FormContainer extends Component {
     constructor() {
         super();
         this.state = {
             isAddUpdate: false,
-            articleList: []
+            articleList: [],
+            isUpdate: false,
+            index: null
         };
     }
 
     openAddNewArticle() {
         this.setState({ isAddUpdate: true });
-        
+        this.setState({ isUpdate: false });
 
+    }
 
+    opeEditArticle(index) {
+        this.setState({ isAddUpdate: true });
+        this.setState({ isUpdate: true });
+        this.setState({ index: index });
+        let list = [...this.props.articleList];
+        this.props.setEditValues(list[index]);
     }
 
     postArticle() {
-
         this.setState({ isAddUpdate: false });
         const { titleText, articleText } = this.props;
-        this.props.addArticle({ titleText, articleText });
+
+        if (this.state.isUpdate) {
+            let updateList = [...this.props.articleList];
+            updateList[this.state.index] = { titleText, articleText };
+            this.props.updateArticle(updateList);
+        } else {
+            this.props.addArticle({ titleText, articleText });
+        }
         this.props.setToDefault();
     }
 
+    backToPrevious() {
+        this.setState({ isAddUpdate: false });
+        this.setState({ isUpdate: false });
+        this.props.setToDefault();
+    }
 
     render() {
         return (
             <form id="main-form" className={Styles.main}>
                 <Header
                     postArticle={this.postArticle.bind(this)}
+                    backToPrevious={this.backToPrevious.bind(this)}
                     isAddUpdate={this.state.isAddUpdate}
+                    isUpdate={this.state.isUpdate}
                     text="Mini-blog"
                 />
                 <div className="content">
-                    <ArticleList articleList={this.props.articleList} isAddUpdate={this.state.isAddUpdate} />
+                    <ArticleList
+                        openEditArticle={this.opeEditArticle.bind(this)}
+                        articleList={this.props.articleList}
+                        isAddUpdate={this.state.isAddUpdate}
+                    />
                     <AddUpdateArticle isAddUpdate={this.state.isAddUpdate} />
                 </div>
                 {renderIf(
@@ -64,7 +96,10 @@ const mapStateToProps = ({ main }) => {
 export default connect(
     mapStateToProps,
     {
-        loadArticle, updateArticle, addArticle,setToDefault
+        loadArticle,
+        updateArticle,
+        addArticle,
+        setToDefault,
+        setEditValues
     }
 )(FormContainer);
-
