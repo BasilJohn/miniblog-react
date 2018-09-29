@@ -5,7 +5,8 @@ import {
     SET_TITLE,
     SET_ARTICLE_TEXT,
     SET_DEFAULT,
-    SET_VALUES
+    SET_VALUES,
+    DELETE_ARTICLE
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -20,8 +21,10 @@ export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case LOAD_ARTICLE_LIST:
             return { ...state, articleList: action.payload };
+        case DELETE_ARTICLE:
+            return { ...state, articleList: action.payload };
         case UPDATE_ARTICLE:
-            return { ...state, articleList: action.payload};
+            return { ...state, articleList: action.payload };
         case ADD_ARTICLE:
             return { ...state, articleList: [...state.articleList, action.payload] };
         case SET_TITLE:
@@ -31,8 +34,8 @@ export default (state = INITIAL_STATE, action) => {
         case SET_DEFAULT:
             return { ...state, titleText: "", articleText: "", isAdded: false, isUpdated: false };
         case SET_VALUES:
-    
-            return { ...state, titleText: action.payload.titleText, articleText:action.payload.articleText };
+
+            return { ...state, titleText: action.payload.titleText, articleText: action.payload.articleText };
         default:
             return state;
     }

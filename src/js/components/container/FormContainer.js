@@ -11,7 +11,8 @@ import {
     updateArticle,
     addArticle,
     setToDefault,
-    setEditValues
+    setEditValues,
+    deleteArticle
 } from "../../store/actions/main";
 
 class FormContainer extends Component {
@@ -28,7 +29,6 @@ class FormContainer extends Component {
     openAddNewArticle() {
         this.setState({ isAddUpdate: true });
         this.setState({ isUpdate: false });
-
     }
 
     opeEditArticle(index) {
@@ -46,6 +46,8 @@ class FormContainer extends Component {
         if (this.state.isUpdate) {
             let updateList = [...this.props.articleList];
             updateList[this.state.index] = { titleText, articleText };
+            this.setState({ isAddUpdate: false });
+            this.setState({ isUpdate: false });
             this.props.updateArticle(updateList);
         } else {
             this.props.addArticle({ titleText, articleText });
@@ -57,6 +59,14 @@ class FormContainer extends Component {
         this.setState({ isAddUpdate: false });
         this.setState({ isUpdate: false });
         this.props.setToDefault();
+    }
+
+    deleteArticle() {
+
+        this.setState({ isAddUpdate: false });
+        this.setState({ isUpdate: false });
+        this.props.setToDefault(this.props.articleList.splice(this.state.index, 1));
+
     }
 
     render() {
@@ -77,13 +87,13 @@ class FormContainer extends Component {
                     />
                     <AddUpdateArticle isAddUpdate={this.state.isAddUpdate} />
                 </div>
-                {renderIf(
-                    !this.state.isAddUpdate,
-                    <Footer
-                        isAddUpdate={this.state.isAddUpdate}
-                        openNextpage={this.openAddNewArticle.bind(this)}
-                    />
-                )}
+
+                <Footer
+                    isAddUpdate={this.state.isAddUpdate}
+                    isUpdate={this.state.isUpdate}
+                    deleteArticle={this.deleteArticle.bind(this)}
+                    openNextpage={this.openAddNewArticle.bind(this)}
+                />
             </form>
         );
     }
@@ -100,6 +110,7 @@ export default connect(
         updateArticle,
         addArticle,
         setToDefault,
-        setEditValues
+        setEditValues,
+        deleteArticle
     }
 )(FormContainer);

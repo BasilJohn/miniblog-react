@@ -6,6 +6,8 @@ export const SET_TITLE ='set_title';
 export const SET_ARTICLE_TEXT ='set_article_text';
 export const SET_DEFAULT ='set_default';
 export const SET_VALUES ='set_values';
+export const DELETE_ARTICLE ='delete_article';
+
 
 
 
