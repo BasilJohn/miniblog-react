@@ -12,7 +12,8 @@ import {
     addArticle,
     setToDefault,
     setEditValues,
-    deleteArticle
+    deleteArticle,
+    loadComments
 } from "../../store/actions/main";
 
 class FormContainer extends Component {
@@ -32,11 +33,13 @@ class FormContainer extends Component {
     }
 
     opeEditArticle(index) {
-        this.setState({ isAddUpdate: true });
-        this.setState({ isUpdate: true });
-        this.setState({ index: index });
-        let list = [...this.props.articleList];
-        this.props.setEditValues(list[index]);
+
+        this.props.loadComments(Number(index) + 1);
+            this.setState({ isAddUpdate: true });
+            this.setState({ isUpdate: true });
+            this.setState({ index: index });
+            let list = [...this.props.articleList];
+            this.props.setEditValues(list[index]);
     }
 
     postArticle() {
@@ -62,11 +65,9 @@ class FormContainer extends Component {
     }
 
     deleteArticle() {
-
         this.setState({ isAddUpdate: false });
         this.setState({ isUpdate: false });
         this.props.setToDefault(this.props.articleList.splice(this.state.index, 1));
-
     }
 
     render() {
@@ -80,12 +81,23 @@ class FormContainer extends Component {
                     text="Mini-blog"
                 />
                 <div className={Styles.content}>
-                    <ArticleList
-                        openEditArticle={this.opeEditArticle.bind(this)}
-                        articleList={this.props.articleList}
-                        isAddUpdate={this.state.isAddUpdate}
-                    />
-                    <AddUpdateArticle isAddUpdate={this.state.isAddUpdate} />
+                    {renderIf(
+                        !this.state.isAddUpdate,
+                        <ArticleList
+                            openEditArticle={this.opeEditArticle.bind(this)}
+                            articleList={this.props.articleList}
+                            isAddUpdate={this.state.isAddUpdate}
+                        />
+                    )}
+
+                    {renderIf(
+                        this.state.isAddUpdate,
+                        <AddUpdateArticle
+                            comments={this.props.comments}
+                            isAddUpdate={this.state.isAddUpdate}
+                            isUpdate={this.state.isUpdate}
+                        />
+                    )}
                 </div>
 
                 <Footer
@@ -99,8 +111,15 @@ class FormContainer extends Component {
     }
 }
 const mapStateToProps = ({ main }) => {
-    const { articleList, isAdded, isUpdated, titleText, articleText } = main;
-    return { articleList, isAdded, isUpdated, titleText, articleText };
+    const {
+        articleList,
+        isAdded,
+        isUpdated,
+        titleText,
+        articleText,
+        comments
+    } = main;
+    return { articleList, isAdded, isUpdated, titleText, articleText, comments };
 };
 
 export default connect(
@@ -111,6 +130,7 @@ export default connect(
         addArticle,
         setToDefault,
         setEditValues,
-        deleteArticle
+        deleteArticle,
+        loadComments
     }
 )(FormContainer);

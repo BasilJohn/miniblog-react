@@ -6,7 +6,8 @@ import {
     SET_ARTICLE_TEXT,
     SET_DEFAULT,
     SET_VALUES,
-    DELETE_ARTICLE
+    DELETE_ARTICLE,
+    LOAD_COMMENTS
 } from "./types";
 
 export const addArticle = value => {
@@ -43,23 +44,38 @@ export const setArticleText = text => {
     };
 };
 
-export const setToDefault=()=>{
-
+export const setToDefault = () => {
     return {
         type: SET_DEFAULT
     };
-}
+};
 
-export const setEditValues=value=>{
+export const setEditValues = value => {
     return {
         type: SET_VALUES,
-        payload:value
+        payload: value
     };
-}
+};
 
-export const deleteArticle=value=>{
+export const deleteArticle = value => {
     return {
         type: DELETE_ARTICLE,
-        payload:value
+        payload: value
     };
-}
+};
+
+export const loadComments = (postId) => {
+
+    return dispatch => {
+        fetch("https://jsonplaceholder.typicode.com/posts/" + postId + "/comments")
+            .then(response => {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response;
+            })
+            .then(response => response.json())
+            .then(comments => dispatch({ type: LOAD_COMMENTS, payload: comments }))
+            .catch();
+    };
+};

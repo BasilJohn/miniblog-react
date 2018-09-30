@@ -24,6 +24,15 @@
     height: 70px;
     padding: 5px;
 }
+.comments{
+    height: 40px;
+    overflow-x: hidden;
+    overflow-y:scroll;
+}
+.comments__section{
+
+    border-bottom: 1px solid red;
+}
 ::-webkit-scrollbar {
     width: 10px;  /* remove scrollbar space */
     background:transparent;  /* optional: just make scrollbar invisible */
